@@ -1,0 +1,107 @@
+import 'package:ai_shapers/core/constants/loading.dart';
+import 'package:ai_shapers/core/constants/utils.dart';
+import 'package:ai_shapers/features/auth/controller/auth_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class RegisterForm extends ConsumerStatefulWidget {
+  const RegisterForm({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends ConsumerState<RegisterForm> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool isPressed = false;
+
+  void signUpWithEmailAndPassword() async {
+    final user = await ref
+        .read(authControllerProvider.notifier)
+        .signUpWithEmailAndPassword(
+          emailController.text.toLowerCase().trim(),
+          passwordController.text,
+        );
+    user.fold((l) {
+      if (context.mounted) {
+        showSnackBar(context, l.toString());
+      }
+    }, (r) {
+      Navigator.of(context).pop();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Email',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Password',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 40),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: isPressed
+                      ? const Loading()
+                      : ElevatedButton(
+                          onPressed: () {
+                            signUpWithEmailAndPassword();
+                            setState(() {
+                              isPressed = true;
+                            });
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.hovered)) {
+                                  return const Color.fromARGB(
+                                      255, 205, 203, 203);
+                                }
+                                return Colors.blue;
+                              },
+                            ),
+                            foregroundColor:
+                                WidgetStateProperty.all<Color>(Colors.black),
+                          ),
+                          child: const Text('Register'),
+                        ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

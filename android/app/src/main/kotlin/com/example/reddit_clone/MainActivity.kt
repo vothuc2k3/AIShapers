@@ -1,4 +1,4 @@
-package com.example.reddit_clone
+package com.example.ai_shapers
 
 import io.flutter.embedding.android.FlutterActivity
 

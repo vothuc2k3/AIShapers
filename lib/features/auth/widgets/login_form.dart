@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends ConsumerStatefulWidget {
+  const LoginForm({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends ConsumerState<LoginForm> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -12,29 +25,31 @@ class LoginForm extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Email',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 TextField(
-                  decoration: InputDecoration(
+                  controller: emailController,
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Password',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 TextField(
-                  decoration: InputDecoration(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
                   obscureText: true,
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -43,17 +58,18 @@ class LoginForm extends StatelessWidget {
                       // Handle login logic
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.hovered)) {
-                            return Color.fromARGB(255, 205, 203, 203); // Màu xám khi hover
+                      backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.hovered)) {
+                            return const Color.fromARGB(255, 205, 203, 203);
                           }
-                          return Colors.blue; // Màu xanh dương mặc định
+                          return Colors.blue;
                         },
                       ),
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Màu chữ đen
+                      foregroundColor:
+                          WidgetStateProperty.all<Color>(Colors.black),
                     ),
-                    child: Text('Login'),
+                    child: const Text('Login'),
                   ),
                 ),
               ],

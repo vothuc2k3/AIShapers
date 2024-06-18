@@ -1,4 +1,4 @@
-# reddit_clone
+# ai_shapers
 
 A new Flutter project.
 

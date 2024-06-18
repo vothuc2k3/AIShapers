@@ -1,10 +1,16 @@
-import 'package:ai_shapers/features/auth/screens/register_screen.dart';
+import 'package:ai_shapers/features/auth/screens/login_screen.dart';
+import 'package:ai_shapers/features/auth/widgets/register_form.dart';
 import 'package:flutter/material.dart';
-import '../widgets/login_form.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({super.key});
 
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +51,7 @@ class LoginScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child:
-                    LoginForm(), // Assuming this widget is defined and does not exceed screen height
+                    RegisterForm(), // Assuming this widget is defined and does not exceed screen height
               ),
               // Footer
               Container(
@@ -58,18 +64,18 @@ class LoginScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Don\'t have an account?'),
+                        const Text('Already have an account?'),
                         TextButton(
                           onPressed: () {
+                            // Navigate to sign up screen
+                            // Example navigation:
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterScreen(),
-                              ),
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
                           },
                           child: const Text(
-                            'Sign up',
+                            'Log in',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.blue,
