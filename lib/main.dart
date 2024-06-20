@@ -65,7 +65,7 @@ class _MyAppState extends ConsumerState<MyApp> {
               return const MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'AI Shapers',
-                home: LoginScreen(),
+                home: HomeScreen(), //change here
               );
             }
           },
