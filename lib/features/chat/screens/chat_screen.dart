@@ -42,7 +42,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   ChatBubble(
                     text: 'This is the main chat template',
                     isSender: true,
-                    
                     backgroundColor: chatBubbleColor,
                   ),
                   Align(
@@ -151,7 +150,7 @@ class ChatBubble extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         decoration: BoxDecoration(
-          color: backgroundColor ?? (isSender ? Colors.blue : Colors.white),
+          color: backgroundColor ?? (isSender ? const Color.fromARGB(255, 13,24,61) : const Color.fromARGB(255,233,233,235)),
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Text(
