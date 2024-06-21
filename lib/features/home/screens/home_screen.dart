@@ -1,3 +1,4 @@
+import 'package:ai_shapers/features/chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -111,7 +112,11 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Handle edit action
+          // Navigate to the Chat screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ChatScreen()),
+          );
         },
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         child: const Icon(
