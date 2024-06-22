@@ -10,22 +10,35 @@ class HomeScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100.0),
         child: AppBar(
-          backgroundColor: const Color.fromARGB(255, 194, 194, 194),
+          backgroundColor: const Color.fromARGB(255, 217,217,217),
           flexibleSpace: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
-                  Image.asset(
-                    'assets/logo.png',
-                    height: 40,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      height: 50,
+                    ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 20),
                   const Text(
                     'Legal Counseling for Children',
                     style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 15, fontWeight: FontWeight.bold),
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontSize: 18,
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 4,
+                          color: Color.fromARGB(64, 0, 0, 0), // 25% opacity black
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -38,35 +51,42 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               child: Row(
                 children: [
                   Text(
                     'Hello, Dustin',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
             ),
             const Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               child: Text(
                 'Welcome to your home page. Start a chat with me or search for answer',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Raleway',
+                ),
               ),
             ),
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Chat with Legal Counseling for Children',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -78,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                     leading: const CustomDiamondIcon(),
                     title: const Text(
                       'Chat text 1 passage .....',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontFamily: 'Raleway'),
                     ),
                     trailing: const Icon(Icons.close, color: Colors.white),
                     onTap: () {
@@ -122,6 +142,7 @@ class HomeScreen extends StatelessWidget {
         child: const Icon(
           Icons.edit,
           size: 30,
+          color: Color.fromARGB(255, 0, 0, 0), // Ensure the icon color matches the design
         ),
       ),
     );
@@ -147,7 +168,7 @@ class DiamondPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white
+      ..color = const Color.fromARGB(255, 50, 60, 80) // Update color to match the design
       ..style = PaintingStyle.fill;
 
     final path = Path();

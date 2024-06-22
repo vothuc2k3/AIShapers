@@ -14,13 +14,18 @@ class SearchScreen extends StatelessWidget {
         title: Row(
           children: [
             Image.asset(
-              'assets/logo.png',
+              'assets/images/logo.png',
               height: 40,
             ),
             const SizedBox(width: 10),
             const Text(
               'Dustin',
-              style: TextStyle(color: Colors.black, fontSize: 18),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -55,7 +60,10 @@ class SearchScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Raleway',
+                ),
               ),
             ),
             Expanded(
@@ -87,7 +95,9 @@ class SearchScreen extends StatelessWidget {
                       'obcaecati suscipit perspiciatis officia exercitationem? '
                       'Atque modi quae amet consectetur rerum qui, dolore, '
                       'molestiae commodi recusandae ipsum totam ut!',
-                      style: TextStyle(color: Color.fromARGB(255, 255,254,254)),
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 254, 254),
+                          fontFamily: 'Raleway'),
                     ),
                   ),
                 ),
