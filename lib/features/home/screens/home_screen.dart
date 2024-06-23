@@ -1,16 +1,31 @@
 import 'package:ai_shapers/features/chat/screens/chat_screen.dart';
+import 'package:ai_shapers/features/search/delegate/search_delegate.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100.0),
         child: AppBar(
-          backgroundColor: const Color.fromARGB(255, 217,217,217),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: SearchLawDelegate(ref),
+                );
+              },
+              icon: const Icon(
+                Icons.search,
+              ),
+            ),
+          ],
+          backgroundColor: const Color.fromARGB(255, 217, 217, 217),
           flexibleSpace: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -35,7 +50,8 @@ class HomeScreen extends StatelessWidget {
                         Shadow(
                           offset: Offset(0, 4),
                           blurRadius: 4,
-                          color: Color.fromARGB(64, 0, 0, 0), // 25% opacity black
+                          color:
+                              Color.fromARGB(64, 0, 0, 0), // 25% opacity black
                         ),
                       ],
                     ),
@@ -98,7 +114,8 @@ class HomeScreen extends StatelessWidget {
                     leading: const CustomDiamondIcon(),
                     title: const Text(
                       'Chat text 1 passage .....',
-                      style: TextStyle(color: Colors.white, fontFamily: 'Raleway'),
+                      style:
+                          TextStyle(color: Colors.white, fontFamily: 'Raleway'),
                     ),
                     trailing: const Icon(Icons.close, color: Colors.white),
                     onTap: () {
@@ -142,7 +159,8 @@ class HomeScreen extends StatelessWidget {
         child: const Icon(
           Icons.edit,
           size: 30,
-          color: Color.fromARGB(255, 0, 0, 0), // Ensure the icon color matches the design
+          color: Color.fromARGB(
+              255, 0, 0, 0), // Ensure the icon color matches the design
         ),
       ),
     );
@@ -168,7 +186,8 @@ class DiamondPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color.fromARGB(255, 50, 60, 80) // Update color to match the design
+      ..color = const Color.fromARGB(
+          255, 50, 60, 80) // Update color to match the design
       ..style = PaintingStyle.fill;
 
     final path = Path();
