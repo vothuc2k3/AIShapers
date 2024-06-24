@@ -5,21 +5,25 @@ class Article {
   final String title;
   final String content;
   final int chapter;
+  final int article;
   Article({
     required this.title,
     required this.content,
     required this.chapter,
+    required this.article,
   });
 
   Article copyWith({
     String? title,
     String? content,
     int? chapter,
+    int? article,
   }) {
     return Article(
       title: title ?? this.title,
       content: content ?? this.content,
       chapter: chapter ?? this.chapter,
+      article: article ?? this.article,
     );
   }
 
@@ -28,6 +32,7 @@ class Article {
       'title': title,
       'content': content,
       'chapter': chapter,
+      'article': article,
     };
   }
 
@@ -36,11 +41,14 @@ class Article {
       title: map['title'] as String,
       content: map['content'] as String,
       chapter: map['chapter'] as int,
+      article: map['article'] as int,
     );
   }
 
   @override
-  String toString() => 'Article(title: $title, content: $content, chapter: $chapter)';
+  String toString() {
+    return 'Article(title: $title, content: $content, chapter: $chapter, article: $article)';
+  }
 
   @override
   bool operator ==(covariant Article other) {
@@ -49,11 +57,17 @@ class Article {
     return 
       other.title == title &&
       other.content == content &&
-      other.chapter == chapter;
+      other.chapter == chapter &&
+      other.article == article;
   }
 
   @override
-  int get hashCode => title.hashCode ^ content.hashCode ^ chapter.hashCode;
+  int get hashCode {
+    return title.hashCode ^
+      content.hashCode ^
+      chapter.hashCode ^
+      article.hashCode;
+  }
 
   String toJson() => json.encode(toMap());
 

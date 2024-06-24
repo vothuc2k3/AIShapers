@@ -3,5 +3,5 @@ class FirebaseConstants {
   static const lawCollection = 'law';
   static const childrenLawCollection = 'childrenLaw';
   static const lawChapterCollection = 'chapters';
-  static const lawArticleCollection = 'articles';
+  static const lawArticleCollection = 'article';
 }

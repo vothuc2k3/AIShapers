@@ -1,6 +1,8 @@
 import 'package:ai_shapers/core/constants/error_text.dart';
 import 'package:ai_shapers/core/constants/loading.dart';
+import 'package:ai_shapers/features/law/screens/law_detail_screen.dart';
 import 'package:ai_shapers/features/search/controller/search_controller.dart';
+import 'package:ai_shapers/models/article_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -47,7 +49,7 @@ class SearchLawDelegate extends SearchDelegate {
             return ListView.separated(
               itemCount: data.length,
               itemBuilder: (context, index) {
-                final article = data[index];
+                final Article article = data[index];
                 return Card(
                   color: Colors.black87,
                   margin: const EdgeInsets.symmetric(
@@ -71,7 +73,9 @@ class SearchLawDelegate extends SearchDelegate {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(color: Colors.white70),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      navigateToChapterDetailScreen(context, article.chapter);
+                    },
                   ),
                 );
               },
@@ -83,6 +87,15 @@ class SearchLawDelegate extends SearchDelegate {
           loading: () => const Loading(),
         );
       },
+    );
+  }
+
+  void navigateToChapterDetailScreen(context, int chapter) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LawChapterDetailScreen(chapter: chapter),
+      ),
     );
   }
 }

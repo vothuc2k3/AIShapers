@@ -43,7 +43,8 @@ class SearchRepository {
         return Article(
           title: data['title'] as String,
           content: data['content'] as String,
-          chapter: data['chapter'] as int,
+          chapter: data['chapterNum'] as int,
+          article: data['articleNum'] as int,
         );
       }).toList();
     });
