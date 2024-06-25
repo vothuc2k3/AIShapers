@@ -10,7 +10,7 @@ final getArticlesDataByChapterProvider =
       .getArticlesDataByChapter(chapter);
 });
 
-final getChapterData = StreamProvider.family((ref, int chapter) {
+final getChapterDataProvider = StreamProvider.family((ref, int chapter) {
   return ref.watch(lawControllerProvider.notifier).getChapterData(chapter);
 });
 

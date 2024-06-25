@@ -24,6 +24,7 @@ class Article {
       content: content ?? this.content,
       chapter: chapter ?? this.chapter,
       article: article ?? this.article,
+      
     );
   }
 

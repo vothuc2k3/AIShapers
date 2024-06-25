@@ -7,10 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class LawChapterDetailScreen extends ConsumerStatefulWidget {
   const LawChapterDetailScreen({
     super.key,
-    required int chapter,
-  }) : _chapter = chapter;
+    required this.chapter,
+    this.selectedArticleIndex,
+  });
 
-  final int _chapter;
+  final int chapter;
+  final int? selectedArticleIndex;
 
   @override
   LawChapterDetailScreenState createState() => LawChapterDetailScreenState();
@@ -18,11 +20,44 @@ class LawChapterDetailScreen extends ConsumerStatefulWidget {
 
 class LawChapterDetailScreenState
     extends ConsumerState<LawChapterDetailScreen> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.selectedArticleIndex != null) {
+        _scrollToSelectedArticle(widget.selectedArticleIndex!);
+      }
+    });
+  }
+
+  void _scrollToSelectedArticle(int index) {
+    final position = (index * 120.0);
+    _scrollController.animateTo(
+      position,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final articles =
-        ref.watch(getArticlesDataByChapterProvider(widget._chapter));
-    final chapter = ref.watch(getChapterData(widget._chapter));
+        ref.watch(getArticlesDataByChapterProvider(widget.chapter));
+    final chapter = ref.watch(getChapterDataProvider(widget.chapter));
     return chapter.when(
       data: (chapter) {
         return Scaffold(
@@ -38,6 +73,7 @@ class LawChapterDetailScreenState
               return Container(
                 color: const Color(0xFF00001c),
                 child: ListView.builder(
+                  controller: _scrollController,
                   padding: const EdgeInsets.all(16.0),
                   itemCount: articles.length,
                   itemBuilder: (context, index) {
@@ -45,7 +81,9 @@ class LawChapterDetailScreenState
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Card(
-                        color: Colors.white,
+                        color: widget.selectedArticleIndex == index
+                            ? Colors.yellow
+                            : Colors.white,
                         elevation: 4,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -64,11 +102,7 @@ class LawChapterDetailScreenState
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Text(
-                                article.content,
-                                style: const TextStyle(
-                                    fontSize: 16.0, color: Color(0xFF00001c)),
-                              ),
+                              _buildArticleContent(article.content),
                             ],
                           ),
                         ),
@@ -97,6 +131,39 @@ class LawChapterDetailScreenState
           child: Loading(),
         ),
       ),
+    );
+  }
+
+  Widget _buildArticleContent(String content) {
+    List<InlineSpan> spans = [];
+    RegExp exp = RegExp(r'(\d+\.\s)');
+    Iterable<RegExpMatch> matches = exp.allMatches(content);
+
+    int lastMatchEnd = 0;
+    for (var match in matches) {
+      if (match.start > lastMatchEnd) {
+        spans.add(TextSpan(
+          text: content.substring(lastMatchEnd, match.start).trim(),
+          style: const TextStyle(fontSize: 16.0, color: Color(0xFF00001c)),
+        ));
+      }
+      spans.add(TextSpan(
+        text: '\n\n${match.group(0)}',
+        style: const TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF00001c)),
+      ));
+      lastMatchEnd = match.end;
+    }
+
+    spans.add(TextSpan(
+      text: content.substring(lastMatchEnd).trim(),
+      style: const TextStyle(fontSize: 16.0, color: Color(0xFF00001c)),
+    ));
+
+    return RichText(
+      text: TextSpan(children: spans),
     );
   }
 }

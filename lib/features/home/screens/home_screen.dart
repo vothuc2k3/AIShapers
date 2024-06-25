@@ -40,7 +40,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   const SizedBox(width: 20),
                   const Text(
-                    'Legal Counseling for Children',
+                    'Tư Vấn Pháp Luật cho Trẻ em',
                     style: TextStyle(
                       color: Color.fromARGB(255, 255, 255, 255),
                       fontSize: 18,
@@ -71,7 +71,7 @@ class HomeScreen extends ConsumerWidget {
               child: Row(
                 children: [
                   Text(
-                    'Hello, Dustin',
+                    'Xin chào, Dustin',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -85,7 +85,7 @@ class HomeScreen extends ConsumerWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               child: Text(
-                'Welcome to your home page. Start a chat with me or search for answer',
+                'Chào mừng đến với ứng dụng! Bắt đầu đoạn chat với tôi hoặc tìm kiếm các điều khoản luật!',
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Raleway',
@@ -97,7 +97,7 @@ class HomeScreen extends ConsumerWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Chat with Legal Counseling for Children',
+                  'Chat với Tư vấn viên AI ngay',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Raleway',
@@ -135,15 +135,15 @@ class HomeScreen extends ConsumerWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Trang chủ',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Cá nhân',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Search',
+            label: 'Tìm kiếm',
           ),
         ],
       ),

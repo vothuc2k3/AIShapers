@@ -23,6 +23,7 @@ class LawRepository {
     return _firestore
         .collection('article')
         .where('chapterNum', isEqualTo: chapter)
+        .orderBy('articleNum', descending: false)
         .snapshots()
         .map((event) {
       List<Article> articles = [];
@@ -53,7 +54,9 @@ class LawRepository {
           Chapter(
             chapterNum: chapter,
             title: docData['title'] as String,
-            articles: List<String>.from(docData['articles']),
+            articles: List<String>.from(
+              docData['articles'],
+            ),
           ),
         );
       }
