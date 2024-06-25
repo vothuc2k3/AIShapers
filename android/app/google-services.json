@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1054968151369:android:3b7e982fe3267cf6a72e98",
+        "android_client_info": {
+          "package_name": "com.ai_shapers.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuQ6S7FRzvyBcOqvz3KvgGuspgg2Nk7GU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1054968151369:android:0ac4842c4cac0280a72e98",
         "android_client_info": {
           "package_name": "com.example.ai_shapers"
