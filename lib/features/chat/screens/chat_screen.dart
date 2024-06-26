@@ -20,7 +20,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     apiKey: 'pat_ufHwVqLf66a4hEVoC5vTh7NZj0lZ6yTH8QjIM0wXdb5QpNuc4AoVTFjgmiD7nopI',
     apiUrl: 'https://api.coze.com/open_api/v2/chat',
   );
-  final String conversationId = '123';  // Sử dụng ID cuộc hội thoại của bạn.
+  final String conversationId = '123';
 
   void _sendMessage(String text) async {
     final chatNotifier = ref.read(chatProvider.notifier);
@@ -128,25 +128,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 7, 12, 29),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-        ],
       ),
     );
   }

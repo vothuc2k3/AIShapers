@@ -8,29 +8,7 @@ class SearchScreen extends StatelessWidget {
     const Color backgroundColor = Color.fromARGB(255, 7, 12, 29);
     const Color searchBarColor = Color.fromARGB(255, 13, 24, 61);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 194, 194, 194),
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              height: 40,
-            ),
-            const SizedBox(width: 10),
-            const Text(
-              'Dustin',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: 'Raleway',
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: Container(
+    return Container(
         color: backgroundColor,
         child: Column(
           children: [
@@ -105,26 +83,6 @@ class SearchScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: backgroundColor,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-        ],
-      ),
-    );
+      );
   }
 }

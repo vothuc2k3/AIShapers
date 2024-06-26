@@ -77,7 +77,9 @@ class AuthController extends StateNotifier<bool> {
     try {
       final result =
           await _authRepository.signInWithEmailAndPassword(email, password);
-      return result.fold((l) => left(l.toString()), (userModel) {
+      return result.fold((l) {
+        return left(l);
+      }, (userModel) {
         _ref.read(userProvider.notifier).update((state) => userModel);
         return right(userModel);
       });
@@ -92,5 +94,10 @@ class AuthController extends StateNotifier<bool> {
 
   Stream<UserModel> getUserData(String uid) {
     return _authRepository.getUserData(uid);
+  }
+
+  //SIGN THE CURRENT OUT
+  void signOut(WidgetRef ref) {
+    _authRepository.signOut(ref);
   }
 }

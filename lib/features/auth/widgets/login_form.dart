@@ -1,3 +1,5 @@
+import 'package:ai_shapers/core/constants/utils.dart';
+import 'package:ai_shapers/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +14,22 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-
+  void login() async {
+    final result = await ref
+        .watch(authControllerProvider.notifier)
+        .signInWithEmailAndPassword(
+          emailController.text.trim().toLowerCase(),
+          passwordController.text,
+        );
+    result.fold(
+      (l) {
+        showSnackBar(context, l);
+      },
+      (_) {
+        Navigator.of(context).pop();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +71,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Handle login logic
-                    },
+                    onPressed: () {},
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.resolveWith<Color>(
                         (Set<WidgetState> states) {

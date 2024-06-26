@@ -2,6 +2,7 @@ import 'package:ai_shapers/core/constants/error_text.dart';
 import 'package:ai_shapers/core/constants/loading.dart';
 import 'package:ai_shapers/features/auth/controller/auth_controller.dart';
 import 'package:ai_shapers/features/auth/repository/auth_repository.dart';
+import 'package:ai_shapers/features/auth/screens/login_screen.dart';
 import 'package:ai_shapers/features/home/screens/home_screen.dart';
 import 'package:ai_shapers/firebase_options.dart';
 import 'package:ai_shapers/models/user_model.dart';
@@ -64,7 +65,7 @@ class _MyAppState extends ConsumerState<MyApp> {
               return const MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'AI Shapers',
-                home: HomeScreen(), //change here
+                home: LoginScreen(),
               );
             }
           },

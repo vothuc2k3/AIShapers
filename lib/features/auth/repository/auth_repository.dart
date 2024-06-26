@@ -93,6 +93,11 @@ class AuthRepository {
     );
   }
 
+  //SIGN THE CURRENT OUT
+  void signOut(WidgetRef ref) async {
+    await _firebaseAuth.signOut();
+  }
+
   //REFERENCE ALL THE USERS
   CollectionReference get _user =>
       _firestore.collection(FirebaseConstants.usersCollection);
