@@ -2,44 +2,47 @@ import 'package:ai_shapers/components/chat_bubble.dart';
 import 'package:ai_shapers/features/chat/state/chat_notifier.dart';
 import 'package:ai_shapers/features/chat/state/chat_state.dart';
 import 'package:ai_shapers/features/chat/state/suggest_message.dart';
-import 'package:ai_shapers/services/api_streaming.dart';
+import 'package:ai_shapers/services/api_non_streaming.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final chatProvider = StateNotifierProvider<ChatNotifier, ChatState>((ref) => ChatNotifier());
 
-class ChatScreen extends ConsumerStatefulWidget {
-  const ChatScreen({super.key});
+class ChatScreenNonstreaming extends ConsumerStatefulWidget {
+  const ChatScreenNonstreaming({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends ConsumerState<ChatScreen> {
+class _ChatScreenState extends ConsumerState<ChatScreenNonstreaming> {
   final TextEditingController _controller = TextEditingController();
-  final ApiStreaming _apiStreaming = ApiStreaming(
+  final ApiNonStreaming _apiNonStreaming = ApiNonStreaming(
     apiKey: 'pat_ufHwVqLf66a4hEVoC5vTh7NZj0lZ6yTH8QjIM0wXdb5QpNuc4AoVTFjgmiD7nopI',
     apiUrl: 'https://api.coze.com/open_api/v2/chat',
   );
-  final String conversationId = '123';
+  final String conversationId = '123';  // Sử dụng ID cuộc hội thoại của bạn.
+  List<String> followUpQuestions = [];  // Lưu trữ các câu hỏi gợi ý từ API
 
   void _sendMessage(String text) async {
     final chatNotifier = ref.read(chatProvider.notifier);
     chatNotifier.addMessage(Message(text: text, isSender: true));
     chatNotifier.setLoading(true);
-
-    String currentContent = '';
+    followUpQuestions.clear();  // Xóa các câu hỏi gợi ý trước đó
 
     try {
-      await for (var data in _apiStreaming.sendMessage(text, conversationId)) {
-        if (data.containsKey('message')) {
-          final message = data['message'];
+      final response = await _apiNonStreaming.sendMessage(text, conversationId);
+      final messages = response['messages'];
+      if (messages is Iterable) {
+        for (var message in messages) {
           if (message['type'] == 'answer') {
-            // Cập nhật nội dung hiện tại với dữ liệu mới nhận được
-            currentContent += message['content'];
-            chatNotifier.updateLastMessageContent(currentContent);
+            chatNotifier.addMessage(Message(text: message['content'], isSender: false));
+          } else if (message['type'] == 'follow_up') {
+            followUpQuestions.add(message['content']);
           }
         }
+      } else {
+        chatNotifier.setError('Failed to parse response: messages is not iterable');
       }
     } catch (e) {
       chatNotifier.setError('Failed to send message: ${e.toString()}');
@@ -94,18 +97,32 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         backgroundColor: message.isSender ? const Color.fromARGB(255, 9, 39, 98) : null,
                         avatar: message.isSender ? null : 'assets/images/avatar.png',
                       ),
-                      if (message.followUpQuestions != null) ...[
-                        const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8.0,
-                          children: message.followUpQuestions!.map((question) => _buildSuggestedQuestionButton(question)).toList(),
-                        ),
-                      ],
                     ],
                   );
                 },
               ),
             ),
+            if (followUpQuestions.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Đề xuất:',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Wrap(
+                        spacing: 8.0,
+                        children: followUpQuestions.map((question) => _buildSuggestedQuestionButton(question)).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             if (chatState.isLoading)
               const Padding(
                 padding: EdgeInsets.all(16.0),
@@ -157,6 +174,25 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color.fromARGB(255, 7, 12, 29),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+        ],
       ),
     );
   }
