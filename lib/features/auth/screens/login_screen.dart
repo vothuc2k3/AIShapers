@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'AI Shaper',
+                      'Tư vấn luật Trẻ Em AI',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Don\'t have an account?'),
+                        const Text('Không có tài khoản?'),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -69,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                             );
                           },
                           child: const Text(
-                            'Sign up',
+                            'Đăng ký',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.blue,

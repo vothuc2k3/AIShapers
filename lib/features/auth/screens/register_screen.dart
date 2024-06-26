@@ -37,7 +37,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'AI Shaper',
+                      'Tư vấn luật Trẻ Em AI',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Already have an account?'),
+                        const Text('Đã có tài khoản?'),
                         TextButton(
                           onPressed: () {
                             // Navigate to sign up screen
@@ -75,7 +75,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                     builder: (context) => const LoginScreen()));
                           },
                           child: const Text(
-                            'Log in',
+                            'Đăng nhập',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.blue,

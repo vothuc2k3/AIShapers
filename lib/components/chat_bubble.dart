@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChatBubble extends StatelessWidget {
+class ChatBubble extends ConsumerStatefulWidget {
   final String text;
   final bool isSender;
   final Color? backgroundColor;
@@ -15,30 +16,40 @@ class ChatBubble extends StatelessWidget {
   });
 
   @override
+  ChatBubbleState createState() => ChatBubbleState();
+}
+
+class ChatBubbleState extends ConsumerState<ChatBubble> {
+  @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment:
+          widget.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        if (!isSender && avatar != null)
+        if (!widget.isSender && widget.avatar != null)
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: CircleAvatar(
-              backgroundImage: AssetImage(avatar!),
+              backgroundImage: AssetImage(widget.avatar!),
               radius: 16,
             ),
           ),
         Flexible(
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
             margin: const EdgeInsets.symmetric(vertical: 5.0),
             decoration: BoxDecoration(
-              color: backgroundColor ?? (isSender ? const Color.fromARGB(255, 13, 24, 61) : const Color.fromARGB(255, 233, 233, 235)),
+              color: widget.backgroundColor ??
+                  (widget.isSender
+                      ? const Color.fromARGB(255, 13, 24, 61)
+                      : const Color.fromARGB(255, 233, 233, 235)),
               borderRadius: BorderRadius.circular(20.0),
             ),
             child: Text(
-              text,
+              widget.text,
               style: TextStyle(
-                color: isSender ? Colors.white : Colors.black,
+                color: widget.isSender ? Colors.white : Colors.black,
                 fontSize: 14.0,
                 fontFamily: 'Raleway',
               ),

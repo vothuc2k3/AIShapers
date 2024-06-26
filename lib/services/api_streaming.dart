@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -7,7 +8,10 @@ class ApiStreaming {
 
   ApiStreaming({required this.apiKey, required this.apiUrl});
 
-  Stream<Map<String, dynamic>> sendMessage(String message, String conversationId) async* {
+  Stream<Map<String, dynamic>> sendMessage(
+    String message,
+    String conversationId,
+  ) async* {
     final request = http.Request('POST', Uri.parse(apiUrl))
       ..headers['Authorization'] = 'Bearer $apiKey'
       ..headers['Content-Type'] = 'application/json'
@@ -37,16 +41,22 @@ class ApiStreaming {
         try {
           // Tách buffer thành các đối tượng JSON riêng lẻ
           String completeData = buffer.toString().trim();
-          // Tìm vị trí của ký tự đóng JSON
+
+          // Tìm tất cả các đối tượng JSON hoàn chỉnh trong buffer
+          int startIndex = completeData.indexOf('{');
           int endIndex = completeData.lastIndexOf('}');
 
-          if (endIndex != -1) {
-            // Lấy phần JSON hoàn chỉnh và giữ lại phần còn lại trong buffer
-            String validJson = completeData.substring(0, endIndex + 1);
+          while (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
+            String validJson = completeData.substring(startIndex, endIndex + 1);
             buffer = StringBuffer(completeData.substring(endIndex + 1));
 
             final jsonData = jsonDecode(validJson) as Map<String, dynamic>;
+            print(jsonData);
             yield jsonData;
+
+            completeData = buffer.toString().trim();
+            startIndex = completeData.indexOf('{');
+            endIndex = completeData.lastIndexOf('}');
           }
         } catch (e) {
           // In ra lỗi nếu có
@@ -54,7 +64,8 @@ class ApiStreaming {
         }
       }
     } else {
-      throw Exception('Failed to get response from API: ${response.reasonPhrase}');
+      throw Exception(
+          'Failed to get response from API: ${response.reasonPhrase}');
     }
   }
 }
