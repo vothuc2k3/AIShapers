@@ -1,9 +1,5 @@
-class Message {
-  final String text;
-  final bool isSender;
 
-  Message({required this.text, required this.isSender});
-}
+import 'package:ai_shapers/features/chat/state/suggest_message.dart';
 
 class ChatState {
   final List<Message> messages;
