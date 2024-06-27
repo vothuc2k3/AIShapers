@@ -11,10 +11,10 @@ class UserProfileScreen extends ConsumerStatefulWidget {
 }
 
 class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
-  void _showLogoutConfirmationDialog(BuildContext context) {
+  void _showLogoutConfirmationDialog() {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
           title: const Text('Xác nhận đăng xuất'),
           content: const Text('Bạn có chắc chắn muốn đăng xuất?'),
@@ -29,7 +29,7 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               child: const Text('Đăng xuất'),
               onPressed: () {
                 Navigator.of(context).pop(); // Đóng hộp thoại xác nhận
-                logout(); // Thực thi hành động đăng xuất
+                logout(); 
               },
             ),
           ],
@@ -40,7 +40,6 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   void logout() {
     ref.watch(authControllerProvider.notifier).signOut(ref);
-    Navigator.of(context).pop();
   }
 
   @override
@@ -105,7 +104,7 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
             // Nút đăng xuất
             Center(
               child: ElevatedButton(
-                onPressed: () => _showLogoutConfirmationDialog(context),
+                onPressed: () => _showLogoutConfirmationDialog(),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.red,
