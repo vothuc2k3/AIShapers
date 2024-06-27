@@ -30,18 +30,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: const Column(
                   children: [
-                    Icon(
-                      Icons.account_circle,
-                      size: 100,
-                      color: Colors.blue,
+                    Image(
+                      image: AssetImage('assets/images/logo.png'),
+                      height: 100,
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     Text(
                       'Tư vấn luật Trẻ Em AI',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                        color: Colors.black,
                       ),
                     ),
                   ],

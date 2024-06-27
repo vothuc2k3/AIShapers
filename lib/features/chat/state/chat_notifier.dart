@@ -50,4 +50,18 @@ class ChatNotifier extends StateNotifier<ChatState> {
         isLoading: state.isLoading,
         errorMessage: errorMessage);
   }
+
+  void updateFollowUpQuestions(List<String> followUpQuestions) {
+    final messages = List<Message>.from(state.messages);
+    final lastMessage = messages.last;
+    if (lastMessage.isSender == false) {
+      final updatedMessage = Message(
+        text: lastMessage.text,
+        isSender: lastMessage.isSender,
+        followUpQuestions: followUpQuestions,
+      );
+      messages[messages.length - 1] = updatedMessage;
+      state = ChatState(messages: messages, isLoading: state.isLoading, errorMessage: state.errorMessage);
+    }
+  }
 }

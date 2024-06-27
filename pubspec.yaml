@@ -90,6 +90,9 @@ flutter:
     - family: Raleway
       fonts:
         - asset: assets/fonts/Raleway.ttf
+    - family: Apercu
+      fonts:
+        - asset: assets/fonts/apercumovistarbold.ttf
     # - family: Trajan Pro
     #   fonts:
     #     - asset: fonts/TrajanPro.ttf
