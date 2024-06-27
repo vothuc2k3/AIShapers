@@ -1,3 +1,4 @@
+import 'package:ai_shapers/core/constants/loading.dart';
 import 'package:ai_shapers/core/constants/utils.dart';
 import 'package:ai_shapers/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,13 @@ class LoginForm extends ConsumerStatefulWidget {
 class _LoginFormState extends ConsumerState<LoginForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  late bool isPressed;
+
+  @override
+  void initState() {
+    super.initState();
+    isPressed = false;
+  }
 
   void login() async {
     final result = await ref
@@ -55,7 +63,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'Password',
+                  'Mật khẩu',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
@@ -71,7 +79,9 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      login();
+                    },
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.resolveWith<Color>(
                         (Set<WidgetState> states) {
@@ -84,7 +94,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                       foregroundColor:
                           WidgetStateProperty.all<Color>(Colors.black),
                     ),
-                    child: const Text('Login'),
+                    child:
+                        isPressed ? const Loading() : const Text('Đăng nhập'),
                   ),
                 ),
               ],

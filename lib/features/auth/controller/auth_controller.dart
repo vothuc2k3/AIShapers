@@ -97,7 +97,7 @@ class AuthController extends StateNotifier<bool> {
   }
 
   //SIGN THE CURRENT OUT
-  void signOut(WidgetRef ref) {
+  void signOut(WidgetRef ref)async {
     _authRepository.signOut(ref);
   }
 }
