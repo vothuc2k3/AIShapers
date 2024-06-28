@@ -57,7 +57,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 4,
+            itemCount: 1,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: const CustomDiamondIcon(),

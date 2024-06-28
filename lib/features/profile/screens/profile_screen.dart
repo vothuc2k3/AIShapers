@@ -1,5 +1,6 @@
 import 'package:ai_shapers/features/auth/controller/auth_controller.dart';
 import 'package:ai_shapers/features/auth/repository/auth_repository.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -29,7 +30,7 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               child: const Text('Đăng xuất'),
               onPressed: () {
                 Navigator.of(context).pop(); // Đóng hộp thoại xác nhận
-                logout(); 
+                logout();
               },
             ),
           ],
@@ -56,7 +57,7 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
             const Center(
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage(
+                backgroundImage: CachedNetworkImageProvider(
                   'https://naitreetgrandir.com/documentsng/images/imagesdossierunepage/our-children-s-emotions/our-children-s-emotions.jpg',
                 ),
               ),

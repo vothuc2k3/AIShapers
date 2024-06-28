@@ -34,9 +34,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         showSnackBar(context, l);
       },
       (_) {
-        if (context.mounted) {
-          Navigator.of(context).pop();
-        }
       },
     );
   }

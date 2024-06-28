@@ -1,4 +1,5 @@
 import 'package:ai_shapers/components/chat_bubble.dart';
+import 'package:ai_shapers/features/auth/repository/auth_repository.dart';
 import 'package:ai_shapers/features/chat/state/chat_notifier.dart';
 import 'package:ai_shapers/features/chat/state/chat_state.dart';
 import 'package:ai_shapers/features/chat/state/suggest_message.dart';
@@ -27,6 +28,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   List<String> followUpQuestions = []; // Lưu trữ các câu hỏi gợi ý từ API
 
   void _sendMessage(String text) async {
+    FocusScope.of(context).unfocus();
+
     final chatNotifier = ref.read(chatProvider.notifier);
     chatNotifier.addMessage(Message(text: text, isSender: true));
     followUpQuestions.clear(); // Xóa các câu hỏi gợi ý trước đó
@@ -67,7 +70,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final chatState = ref.watch(chatProvider);
-
+    final user = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 194, 194, 194),
@@ -78,9 +81,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               height: 40,
             ),
             const SizedBox(width: 10),
-            const Text(
-              'Dustin',
-              style: TextStyle(color: Colors.black, fontSize: 18),
+            Text(
+              user!.name,
+              style: const TextStyle(color: Colors.black, fontSize: 18),
             ),
           ],
         ),
@@ -112,7 +115,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                               ? null
                               : 'assets/images/avatar.png',
                         ),
-                        if (followUpQuestions.isNotEmpty && message.followUpQuestions != null)
+                        if (followUpQuestions.isNotEmpty &&
+                            message.followUpQuestions != null)
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
@@ -192,32 +196,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 7, 12, 29),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-        ],
-      ),
     );
   }
 
   Widget _buildSuggestedQuestionButton(String text) {
-    return Column(
-      children: [
-        ElevatedButton(
+    return Column(children: [
+      ElevatedButton(
         onPressed: () => _sendSuggestedMessage(text),
         style: ElevatedButton.styleFrom(
           backgroundColor:
@@ -234,8 +218,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         ),
       ),
       const SizedBox(height: 8)
-      ]
-    );
-    
+    ]);
   }
 }

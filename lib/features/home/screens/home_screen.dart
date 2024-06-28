@@ -3,6 +3,7 @@ import 'package:ai_shapers/features/chat/screens/chat_screen.dart';
 import 'package:ai_shapers/features/search/delegate/search_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_icon_class/font_awesome_icon_class.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -116,8 +117,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             label: 'Cá nhân',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Tìm kiếm',
+            icon: FaIcon(FontAwesomeIcons.scaleBalanced),
+            label: 'Luật',
           ),
         ],
       ),

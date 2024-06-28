@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -36,10 +33,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -54,9 +48,27 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAuQ6S7FRzvyBcOqvz3KvgGuspgg2Nk7GU',
-    appId: '1:1054968151369:android:3b7e982fe3267cf6a72e98',
+    appId: '1:1054968151369:android:0ac4842c4cac0280a72e98',
     messagingSenderId: '1054968151369',
     projectId: 'ai-shapers',
+    storageBucket: 'ai-shapers.appspot.com',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAarNINPpxHQW17lZ7iuu7vmSPLXK0CLsg',
+    appId: '1:1054968151369:web:785f6a6a94f788a7a72e98',
+    messagingSenderId: '1054968151369',
+    projectId: 'ai-shapers',
+    authDomain: 'ai-shapers.firebaseapp.com',
+    storageBucket: 'ai-shapers.appspot.com',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAarNINPpxHQW17lZ7iuu7vmSPLXK0CLsg',
+    appId: '1:1054968151369:web:3bcd6ec45954a305a72e98',
+    messagingSenderId: '1054968151369',
+    projectId: 'ai-shapers',
+    authDomain: 'ai-shapers.firebaseapp.com',
     storageBucket: 'ai-shapers.appspot.com',
   );
 
