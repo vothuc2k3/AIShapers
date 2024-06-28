@@ -18,6 +18,7 @@ class ChatScreen extends ConsumerStatefulWidget {
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
+  bool? sentText;
   final TextEditingController _controller = TextEditingController();
   final ApiStreaming _apiStreaming = ApiStreaming(
     apiKey:
@@ -28,7 +29,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   List<String> followUpQuestions = []; // Lưu trữ các câu hỏi gợi ý từ API
 
   void _sendMessage(String text) async {
+    setState(() {
+      sentText = true;
+    });
     FocusScope.of(context).unfocus();
+    _controller.clear();
 
     final chatNotifier = ref.read(chatProvider.notifier);
     chatNotifier.addMessage(Message(text: text, isSender: true));
@@ -58,6 +63,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       }
     } catch (e) {
       chatNotifier.setError('Failed to send message: ${e.toString()}');
+    } finally{
+      setState(() {
+        sentText = false;
+      });
     }
   }
 
@@ -68,11 +77,17 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   @override
+  void initState(){
+    super.initState();
+    sentText = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final chatState = ref.watch(chatProvider);
     final user = ref.watch(userProvider);
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( 
         backgroundColor: const Color.fromARGB(255, 194, 194, 194),
         title: Row(
           children: [
@@ -163,6 +178,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     Expanded(
                       child: TextField(
                         controller: _controller,
+                        readOnly: sentText! ? true : false,
                         decoration: InputDecoration(
                           hintText: 'Message...',
                           filled: true,
@@ -185,7 +201,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         final text = _controller.text.trim();
                         if (text.isNotEmpty) {
                           _sendMessage(text);
-                          _controller.clear();
                         }
                       },
                     ),
